@@ -1,6 +1,6 @@
 const Like = require("../models/like");
 const User = require("../models/users");
-const Receipe = require("../models/reciepe");
+const Recipe = require("../models/recipe");
 
 
 exports.getLikes = (req, res, next) => {
@@ -16,7 +16,7 @@ exports.postLike = (req, res, next) => {
     // Like.findAll({
     //     where: {
     //         UserId: 1,
-    //         ReceipeId: 1
+    //         RecipeId: 1
     //     }
     // })
     //     .then((result) => {
@@ -27,7 +27,7 @@ exports.postLike = (req, res, next) => {
     //             // if he/she has not, it post it to the like db
                 Like.create({
                     UserId: 1,
-                    ReceipeId: 1
+                    RecipeId: 1
                 })
                     .then((like => {
                         res.json({ like, success: true });

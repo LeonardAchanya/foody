@@ -7,7 +7,7 @@ import "./App.css";
 
 import AppNavbar from "./components/AppNavBar/AppNavBar";
 import Logout from "./components/Logout";
-import {Home, Recipes, Auth } from "./pages";
+import {Home, Recipes, Auth , AddRecipe} from "./pages";
 
 class App extends Component {
   render() {
@@ -25,7 +25,7 @@ class App extends Component {
           <Route path="/logout" component={Logout} />
           <Route path="/auth" component={Auth} />
         <Route path="/recipes" component={Recipes} />
-          {/* <Route path="/add-recipe" component={UploadRecipe} /> */}
+          <Route path="/add-recipe" component={AddRecipe} />
           <Route path="/" exact component={Home} />
           <Route render={() => <h2>Not Found</h2>} />
         </Switch>

@@ -1,4 +1,4 @@
-require("dotenv").config();  // allows our project read variables from .env files
+require("dotenv").config(); // allows our project read variables from .env files
 
 const express = require("express");
 
@@ -9,6 +9,8 @@ const cors = require("cors");
 const sequelize = require("./config/database");
 
 const likeRoutes = require("./routes/api/like");
+const categoryRoute = require("./routes/api/category");
+const recipeRoute = require("./routes/api/recipe");
 const userRoutes = require("./routes/api/user");
 const authRoute = require("./routes/api/auth");
 
@@ -25,6 +27,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/likes", likeRoutes);
+app.use("/api/category", categoryRoute);
+app.use("/api/recipe", recipeRoute);
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoute);
 
@@ -42,4 +46,3 @@ sequelize.sync()
         app.listen(PORT, () => console.log("Started on " + PORT));
     })
     .catch((err) => console.log(err));
-

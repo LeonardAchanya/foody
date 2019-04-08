@@ -1,9 +1,12 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/database");
 
-class Receipe extends Sequelize.Model {}
+const Category = require("./category");
+const User = require("./users");
 
-Receipe.init({
+class Recipe extends Sequelize.Model {}
+
+Recipe.init({
     title:{
         type: Sequelize.STRING,
         allowNull: false
@@ -19,4 +22,7 @@ Receipe.init({
 
 }, {sequelize});
 
-module.exports = Receipe;
+Recipe.belongsTo(Category);
+Recipe.belongsTo(User);
+
+module.exports = Recipe;

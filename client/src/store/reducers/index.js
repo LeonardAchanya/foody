@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import authReducer from "./auth";
+import recipeReducer from "./recipe";
 
 // Only one reducer can update the store
 // So if you split up your reducers based
@@ -9,6 +10,7 @@ import authReducer from "./auth";
 // That's what we are doing here.
 
 const rootReducer = combineReducers({
+  recipe: recipeReducer,
   auth: authReducer
 });
 
