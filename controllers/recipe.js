@@ -12,6 +12,24 @@ exports.getAllRecipes = (req, res, next) => {
         }))
 }
 
+exports.getRecipeById = (req, res) => {
+	const recipeId = req.params.id;
+	Recipe.findByPk(recipeId)
+		.then(recipe => {
+			if (!recipe) {
+				res.status(404).json({ success: false, message: "Recipe not Found" });
+			} else {
+				res.json(recipe);
+			}
+		})
+		.catch(err =>
+			res.status(500).json({
+				success: false,
+				message: "Something went wrong while getting the recipe"
+			})
+		);
+};
+
 exports.getUserRecipes = (req,res,next)=>{
     console.log("getUserRecipes");
 	// const userId = req.userId;
