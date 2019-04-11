@@ -28,7 +28,7 @@ class AddRecipe extends Component {
 		title: "",
 		description: "",
 		imageUrl: "",
-		CategoryId: ""
+		categoryId: ""
 	};
 
 	save = e => {
@@ -37,7 +37,7 @@ class AddRecipe extends Component {
 			title: this.state.title,
 			description: this.state.description,
 			imageUrl: this.state.imageUrl,
-			CategoryId: this.state.CategoryId
+			categoryId: this.state.categoryId
 		};
 		// Sets the "jobCreated" state to true on success,
 		// this to redirect to home because we're using
@@ -81,7 +81,7 @@ class AddRecipe extends Component {
                             </FormGroup>
                             <FormGroup>
                                 {/* <Label for="recipe category">Select Category</Label> */}
-                                <Input type="select" name="CategoryId" id="categoryId" onChange={this.onChanged}>
+                                <Input type="select" name="categoryId" id="categoryId" onChange={this.onChanged}>
                                      <option value="">Select Recipe Category</option>
                                      <option value="1">African Dish</option>
                                      <option value="2">British Dish</option>

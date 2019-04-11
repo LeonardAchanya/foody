@@ -15,6 +15,11 @@ const userRoutes = require("./routes/api/user");
 const authRoute = require("./routes/api/auth");
 
 
+// Models
+const Recipe = require("./models/recipe");
+const Category = require("./models/category");
+const User = require("./models/users");
+
 app = express();
 
 // This middleware always runs for all request
@@ -35,6 +40,12 @@ app.use("/api/auth", authRoute);
 // Gets the PORT from the Node env and if it
 // does not exists there, set it to 5000
 const PORT = process.env.PORT || 5000;
+
+
+// Associations for our models
+User.hasMany(Recipe, { foreignKey: "userId" });
+Recipe.belongsTo(User, { as: "user", onDelete: "CASCADE" });
+Recipe.belongsTo(Category, { as: "category", onDelete: "CASCADE" });
 
 
 // This activates the db connection and runs any

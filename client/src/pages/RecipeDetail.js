@@ -23,8 +23,8 @@ class RecipeDetail extends Component {
                     <>
 					<h2>{ recipe && recipe.title}</h2>
 					<h2>{recipe &&  recipe.description}</h2>
-					<h2>{recipe &&  recipe.CategoryId}</h2>
-					<h2>{recipe &&  recipe.UserId}</h2>
+					<h2>{recipe &&  recipe.category.title}</h2>
+					<h2>By {recipe &&  recipe.user.firstname+ " "+ recipe.user.lastname}</h2>
                     </>
 				)}
 			</Container>

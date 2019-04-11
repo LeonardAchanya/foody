@@ -9,11 +9,11 @@ const RecipeCard = ({recipes}) => {
                 <Card >
                     <CardBody>
                         <CardTitle>{recipe.title}</CardTitle>
-                        <CardSubtitle>Card subtitle</CardSubtitle>
+                        <CardSubtitle>by {recipe.user.firstname+ " "+ recipe.user.lastname}</CardSubtitle>
                     </CardBody>
                     {/* <img width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Recipe" /> */}
                     <CardBody>
-                        <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                        <CardText>{recipe.description}</CardText>
                         <CardLink href={`recipe/`+ recipe.id}>Card Link</CardLink>
                         <CardLink href="#">Another Link</CardLink>
                     </CardBody>

@@ -22,7 +22,4 @@ Recipe.init({
 
 }, {sequelize});
 
-Recipe.belongsTo(Category);
-Recipe.belongsTo(User);
-
 module.exports = Recipe;

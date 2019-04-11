@@ -2,7 +2,14 @@ const Recipe = require("../models/recipe");
 const User = require("../models/users");
 
 exports.getAllRecipes = (req, res, next) => {
-    Recipe.findAll()
+	Recipe.findAll({
+		include: [
+			{
+				all: true,
+				attributes: { exclude: ["password", "createdAt", "updatedAt"] }
+			}
+		]
+	})
         .then(
             (recipes) => {
                 res.json(recipes)
@@ -14,7 +21,18 @@ exports.getAllRecipes = (req, res, next) => {
 
 exports.getRecipeById = (req, res) => {
 	const recipeId = req.params.id;
-	Recipe.findByPk(recipeId)
+	// Recipe.findByPk(recipeId)
+	Recipe.findOne({
+		where:{
+			id: recipeId
+		},
+		include: [
+			{
+				all: true,
+				attributes: { exclude: ["password", "createdAt", "updatedAt"] }
+			}
+		]
+	})
 		.then(recipe => {
 			if (!recipe) {
 				res.status(404).json({ success: false, message: "Recipe not Found" });
@@ -47,7 +65,7 @@ exports.getUserRecipes = (req,res,next)=>{
 }
 
 exports.postRecipe = (req, res) => {
-	const { title,description,imageUrl,CategoryId } = req.body;
+	const { title,description,imageUrl,categoryId } = req.body;
 	const UserId = req.userId;
 
 	User.findByPk(UserId)
@@ -56,8 +74,8 @@ exports.postRecipe = (req, res) => {
 					title,
 					description,
 					imageUrl,
-					CategoryId,
-					UserId
+					categoryId,
+					userId: UserId
 				})
 					.then(recipe => {
 						res.json(recipe);
