@@ -49,19 +49,24 @@ exports.getRecipeById = (req, res) => {
 };
 
 exports.getUserRecipes = (req,res,next)=>{
-    console.log("getUserRecipes");
-	// const userId = req.userId;
-    // Recipe.findOne({
-    //     where:{
-    //         UserId:id
-    //     }
-    // })
-    // .then((recipes)=>{
-    //     res.json(recipes)
-    // })
-    // .catch(err=> res.json({
-    //     success:false
-    // }))
+	const userId = req.userId;
+    Recipe.findAll({
+        where:{
+            userId
+		},
+		include: [
+			{
+				all: true,
+				attributes: { exclude: ["password", "createdAt", "updatedAt"] }
+			}
+		]
+    })
+    .then((recipes)=>{
+        res.json(recipes)
+    })
+    .catch(err=> res.json({
+        success:false
+    }))
 }
 
 exports.postRecipe = (req, res) => {

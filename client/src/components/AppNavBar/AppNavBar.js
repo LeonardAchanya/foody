@@ -40,11 +40,19 @@ class AppNavbar extends Component {
                 </NavLink>
               </NavItem>
               {this.props.isAuth && (
+                 <>
+                  <NavItem>
+                    <NavLink to="/add-recipe" className="nav-link">
+                      Upload Recipe
+                    </NavLink>
+                  </NavItem>
+              
                 <NavItem>
-                  <NavLink to="/add-recipe" className="nav-link">
-                    Upload Recipe
+                  <NavLink to="/my-recipes" className="nav-link">
+                    My Recipes
                   </NavLink>
                 </NavItem>
+                  </>
               )}
               <NavItem>
                 {this.props.isAuth ? (

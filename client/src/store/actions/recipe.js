@@ -14,6 +14,13 @@ export const getRecipesSuccess = recipes => {
 	};
 };
 
+export const getUserRecipesSuccess = recipes => {
+	return {
+		type: types.GET_USER_RECIPES_SUCCESS,
+		recipes
+	};
+};
+
 export const errorOccured = error => {
 	return {
 		type: types.ERROR_OCCURED,
@@ -29,6 +36,30 @@ export const getRecipes = () => {
 			.get("/recipe")
 			.then(res => {
 				dispatch(getRecipesSuccess(res.data));
+			})
+			.catch(err => dispatch(errorOccured(err)));
+	};
+};
+
+
+export const getUserRecipes = () => {
+	return (dispatch,getState) => {
+		dispatch(loading());
+		const token = getState().auth.token;
+
+		// Headers
+		const config = {
+			headers: {}
+		};
+
+		// If token, add to headers
+		if (token) {
+			config.headers["x-access-token"] = token;
+		}
+		axios
+			.get("/recipe/user/recipes")
+			.then(res => {
+				dispatch(getUserRecipesSuccess(res.data));
 			})
 			.catch(err => dispatch(errorOccured(err)));
 	};

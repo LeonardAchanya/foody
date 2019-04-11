@@ -16,6 +16,12 @@ const reducer = (state = initialState, action) => {
 				recipes: action.recipes,
 				isLoading: false
 			};
+		case types.GET_USER_RECIPES_SUCCESS:
+			return {
+				...state,
+				recipes: action.recipes,
+				isLoading: false
+			};
 		case types.GET_SINGLE_RECIPE_SUCCESS:
 			return {
 				...state,
