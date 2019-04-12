@@ -8,7 +8,8 @@ import {
     Card,
     CardHeader,
     CardBody,
-    // Label,
+	// Label,
+	FormText,
     Input,
 	Spinner,
 	Alert,
@@ -27,22 +28,8 @@ class AddRecipe extends Component {
 	state = {
 		title: "",
 		description: "",
-		imageUrl: "",
+		image: "",
 		categoryId: ""
-	};
-
-	save = e => {
-		e.preventDefault();
-		const formData = {
-			title: this.state.title,
-			description: this.state.description,
-			imageUrl: this.state.imageUrl,
-			categoryId: this.state.categoryId
-		};
-		// Sets the "jobCreated" state to true on success,
-		// this to redirect to home because we're using
-		// the <Redirect /> component.
-		this.props.onAddRecipe(JSON.stringify(formData));
 	};
 
 	onChanged = e => {
@@ -50,6 +37,26 @@ class AddRecipe extends Component {
 			[e.target.name]: e.target.value
 		});
 	};
+
+	onImgChanged = e => {
+		this.setState({
+			image: e.target.files[0]
+		});
+  };
+
+  save = e => {
+	e.preventDefault();
+	const formData = {
+		title: this.state.title,
+		description: this.state.description,
+		image: this.state.image,
+		categoryId: this.state.categoryId
+	};
+	// Sets the "jobCreated" state to true on success,
+	// this to redirect to home because we're using
+	// the <Redirect /> component.
+	this.props.onAddRecipe(formData);
+};
 
 	render() {
 		return (
@@ -60,7 +67,7 @@ class AddRecipe extends Component {
                         <Card style={{marginTop:"10px"}}>
                             <CardHeader tag="h2">Upload Recipe</CardHeader>
                                 <CardBody>
-                                    <Form onSubmit={this.save}>
+                                    <Form onSubmit={this.save} encType = "multipart/form-data">
 							{this.props.error && (
 								<Alert color="danger">{this.props.error.msg}</Alert>
                             )}
@@ -75,10 +82,19 @@ class AddRecipe extends Component {
 									onChange={this.onChanged}
 								/>
 							</FormGroup>
-                            <FormGroup>
-                                {/* <Label for="Recipe Image">Recipe Image</Label> */}
-                                    <Input type="file" name="imageUrl" id="imageUrl" />
-                            </FormGroup>
+							<FormGroup>
+								{/* <Label for="recipeImage">Recipe Picture</Label> */}
+									<Input
+									type="file"
+									name="image"
+									id="recipeImage"
+									accept=".jpg, .jpeg, .png"
+									onChange={this.onImgChanged}
+									/>
+									<FormText color="muted">
+											Recipe Image must be png, jpg or jpeg format.
+									</FormText>
+							</FormGroup>
                             <FormGroup>
                                 {/* <Label for="recipe category">Select Category</Label> */}
                                 <Input type="select" name="categoryId" id="categoryId" onChange={this.onChanged}>
@@ -122,7 +138,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	onAddRecipeInit: () => dispatch(addRecipeInit()),
-	onAddRecipe: recipeData => dispatch(addRecipe(recipeData))
+	onAddRecipe: formData => dispatch(addRecipe(formData))
 });
 
 export default connect(

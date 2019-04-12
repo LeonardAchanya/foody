@@ -70,9 +70,12 @@ exports.getUserRecipes = (req,res,next)=>{
 }
 
 exports.postRecipe = (req, res) => {
-	const { title,description,imageUrl,categoryId } = req.body;
+	const { title,description,categoryId } = req.body;
 	const UserId = req.userId;
-
+    let imageUrl = null;
+	if (req.file) {
+		imageUrl = req.file.path;
+	}
 	User.findByPk(UserId)
 		.then(user => {
 	Recipe.create({

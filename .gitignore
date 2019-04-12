@@ -5,4 +5,7 @@ client/node_modules/
 # Ignore file named '.env'
 .env
 
+# ignore uploads folder
+uploads/
+
 .DS_Store

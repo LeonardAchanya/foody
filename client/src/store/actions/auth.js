@@ -19,9 +19,30 @@ import * as types from "./types";
  export const auth = authData => (dispatch, getState) => {
   dispatch(authStart());
   const isLogin = getState().auth.isLogin;
-  const endPoint = isLogin ? "auth" : "user";
+  // const endPoint = isLogin ? "auth" : "user";
+  let endPoint = null;
+	let formData = null;
+	const config = {
+		headers: {}
+	};
+	if (!isLogin) {
+		config.headers["Content-Type"] = "multipart/form-data";
+		endPoint = "user";
+		formData = new FormData();
+		formData.append("firstname", authData.firstname);
+		formData.append("lastname", authData.lastname);
+		formData.append("username", authData.username);
+		formData.append("email", authData.email);
+		formData.append("password", authData.password);
+		formData.append("image", authData.image);
+	} else {
+		config.headers["Content-Type"] = "application/json";
+		endPoint = "auth";
+		formData = authData;
+  }
+  
   axios
-    .post("/" + endPoint, authData)
+    .post("/" + endPoint, formData,config)
     .then(res => {
       const { token, user } = res.data;
       const userId = user.id;

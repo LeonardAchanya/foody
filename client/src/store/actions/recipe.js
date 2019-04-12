@@ -88,6 +88,7 @@ export const addRecipe = recipeData => {
 	return (dispatch, getState) => {
 		dispatch(loading());
 		const token = getState().auth.token;
+		let formData = null;
 
 		// Headers
 		const config = {
@@ -97,9 +98,15 @@ export const addRecipe = recipeData => {
 		// If token, add to headers
 		if (token) {
 			config.headers["x-access-token"] = token;
+			config.headers["Content-Type"] = "multipart/form-data";
+			formData = new FormData();
+			formData.append("title", recipeData.title);
+			formData.append("description", recipeData.description);
+			formData.append("categoryId", recipeData.categoryId);
+			formData.append("image", recipeData.image);
 		}
 		axios
-			.post("/recipe/add", recipeData, config)
+			.post("/recipe/add", formData, config)
 			.then(res => {
 				return dispatch({ type: types.ADD_RECIPE_SUCCESS });
 			})

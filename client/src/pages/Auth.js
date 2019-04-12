@@ -30,7 +30,7 @@ import {
     email: "",
     password: "",
     password2: "",
-    // imageUrl: "",
+    image: "",
     passwordMatched: false
   };
 
@@ -40,6 +40,12 @@ import {
     });
   };
 
+  onImgChanged = e => {
+		this.setState({
+			image: e.target.files[0]
+		});
+  };
+  
    submitForm = e => {
     e.preventDefault();
     let formData;
@@ -56,7 +62,7 @@ import {
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,
-        // imageUrl: this.state.imageUrl
+        image: this.state.image
       };
       this.props.onAuth(formData);
     }
@@ -75,7 +81,11 @@ import {
               <CardHeader tag="h2">Login</CardHeader>
               <CardBody>
                 {error && <Alert color="danger">{this.props.error.msg}</Alert>}
-                <Form onSubmit={this.submitForm} action="POST">
+                <Form onSubmit={this.submitForm} action="POST" encType={
+										!isLogin
+											? "multipart/form-data"
+											: "application/x-www-form-urlencoded"
+									}>
                   {!isLogin && (
                   <>  
                   <FormGroup>
@@ -99,12 +109,18 @@ import {
                     />
                   </FormGroup>
                   <FormGroup>
-                        {/* <Label for="Profile">Profile Picture</Label> */}
-                        <FormText color="muted">
-                        Do you wish for your profile to be easily noticed? Upload a profile Picture
-                        </FormText>
-                        <Input type="file" name="imageUrl" id="imageUrl" />
-                </FormGroup>
+											<Label for="profilePic">Profile Picture</Label>
+											<Input
+												type="file"
+												name="image"
+												id="profilePic"
+												accept=".jpg, .jpeg, .png"
+												onChange={this.onImgChanged}
+											/>
+											<FormText color="muted">
+												Do you wish for your profile to be easily noticed? Images must be png, jpg or jpeg format.
+											</FormText>
+										</FormGroup>
                   <FormGroup>
                     {/* <Label for="username">Username</Label> */}
                     <Input

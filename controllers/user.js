@@ -4,10 +4,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/users");
 
 exports.postAddUser = (req, res, next) => {
-    const { firstname, lastname, email, username, password, confirmPassword, imageUrl } = req.body;
+    const { firstname, lastname, email, username, password } = req.body;
+    let imageUrl = null;
     if (!firstname || !lastname || !email || !username || !password) {
-        res.status(400).json({ msg: "All Field are required" })
+        res.status(400).json({ msg: "All Fields are required except profile image" })
     } else {
+        if (req.file) {
+            imageUrl = req.file.path;
+        }
         User.findOne({
             where: {
                 email
@@ -17,10 +21,6 @@ exports.postAddUser = (req, res, next) => {
                 if (user) {
                     return res.status(400).json({ msg: "User exists" })
                 } else {
-
-                    // if (password !== confirmPassword) {
-                        // return res.status(400).json({ msg: "Password's don't match" })
-                    // } else {
                         let hashedPassword;
                         try {
                             const salt = bcrypt.genSaltSync(10);
@@ -50,8 +50,6 @@ exports.postAddUser = (req, res, next) => {
                                     })
                                 });
                         }).catch((err) => res.status(500).json({ msg: "error occured" }))
-                    // }
-
                 }
             })
             .catch((err) => res.status(500).json({ msg: err }))

@@ -1,5 +1,5 @@
 require("dotenv").config(); // allows our project read variables from .env files
-
+const path = require("path");
 const express = require("express");
 
 // Enables Cross Origin Resource Sharing for our Project
@@ -26,6 +26,9 @@ app = express();
 // and this present setting allows and domain to 
 // access resources (our api) from our site.
 app.use(cors());
+
+// Create a static directory for our uploads
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // This parses all json request so we can access
 // its contents via 'req.body' object
