@@ -13,41 +13,54 @@ class RecipeDetail extends Component {
 	};
 
 	render() {
-		const { recipe } = this.props;
+		const { recipe, isAuth } = this.props;
 		return (
 			<>
-			<Container>
-				<h1>{recipe && recipe.title}</h1>
-				{this.props.isLoading ? (
-					<div style={{ display: "flex", justifyContent: "center" }}>
-						<Spinner color="dark" />
-					</div>
-				) : (
+				<Container>
+					{!recipe ? (<h2>Recipe not found</h2>) : (
 						<>
-							<section className="phase3">
-								<img src={`http://localhost:5000/${recipe && recipe.imageUrl}`} alt="recipe" />
-								<h4>by {recipe && recipe.user.firstname} {recipe && recipe.user.lastname}</h4>
-								<h2>How is it done?</h2>
-								<p>{recipe && recipe.description}</p>
-								<div className="actions">
-									<i className="fas fa-bookmark"></i>
-									<i className="far fa-heart">12</i>
-									<i className="far fa-comment-alt">123</i>
+							<h1>{recipe && recipe.title}</h1>
+							{this.props.isLoading ? (
+								<div style={{ display: "flex", justifyContent: "center" }}>
+									<Spinner color="dark" />
 								</div>
-							</section>
+							) : (
+									<>
+										<section className="phase3">
+											<img src={`http://localhost:5000/${recipe && recipe.imageUrl}`} alt="recipe" />
+											<h4>by {recipe && recipe.user.firstname} {recipe && recipe.user.lastname}</h4>
+											<h2>How is it done?</h2>
+											<p>{recipe && recipe.description}</p>
 
+											{isAuth ?
+
+												<div className="actions">
+													<i className="fas fa-bookmark"></i>
+													<i className="far fa-heart">12</i>
+													<i className="far fa-comment-alt">123</i>
+												</div>
+												:
+												""
+											}
+										</section>
+
+									</>
+								)}
 						</>
 					)}
-			</Container>
-					<Footer/>
-					</>
+
+				</Container>
+				<Footer />
+			</>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
 	recipe: state.recipe.recipe,
-	isLoading: state.recipe.isLoading
+	isLoading: state.recipe.isLoading,
+	isAuth: state.auth.token !== null
+
 });
 
 const mapDispatchToProps = dispatch => ({

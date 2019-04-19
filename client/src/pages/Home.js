@@ -35,7 +35,7 @@ class Home extends Component {
                                 </div>
                             ) : (
 
-                                    <RecipeCard recipes={this.props.recipes} />
+                                    <RecipeCard recipes={this.props.recipes} isAuth={this.props.isAuth} />
 
                                 )}
                         </div>
@@ -54,7 +54,9 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
     recipes: state.recipe.recipes,
-    isLoading: state.recipe.isLoading
+    isLoading: state.recipe.isLoading,
+    isAuth: state.auth.token !== null
+
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import "./RecipeCard.css";
 
-const RecipeCard2 = ({recipes}) => {
+const RecipeCard = ({recipes,isAuth}) => {
     return (
         <>
            {recipes.map(recipe => (
@@ -15,12 +15,16 @@ const RecipeCard2 = ({recipes}) => {
                         <p className="recipe-description">{recipe.description} <NavLink to={`recipe/`+ recipe.id}>Read More</NavLink></p>
                         
                     </div>
+                    {isAuth? 
                     <div className="recipe-actions">
                         {/* <i class="far fa-bookmark"></i>  */}
                         <i className="fas fa-bookmark"></i>
                         <i className="far fa-heart">12</i>
                         <i className="far fa-comment-alt">123</i>
                     </div>
+                    :
+                    ""
+                    }
                 </div>
             ))}
 
@@ -28,4 +32,4 @@ const RecipeCard2 = ({recipes}) => {
             );
         };
         
-export default RecipeCard2;
+export default RecipeCard;
