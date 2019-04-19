@@ -1,0 +1,56 @@
+.banner {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid rgb(249, 249, 249);
+    height: 500px;
+}
+.banner-text {
+    flex: 40%;
+    padding-top: 200px;
+    padding-bottom: 250px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.banner-text h2 {
+    font-size: 50px;
+}
+.banner-text p {
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.banner-text button {
+    background-color: rgb(80, 167, 119);
+    border-radius: 40px;
+    color: white;
+    padding: 15px 50px;
+    font-size: 15px;
+}
+.banner-img {
+    flex: 60%;
+}
+.banner-img img {
+    object-fit: cover;
+}
+
+.phase1 {
+    display: flex;
+}
+.recipes {
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.show-more {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    background-color: rgb(80, 167, 119);
+    border-radius: 40px;
+    color: white;
+    padding: 15px 50px;
+    font-size: 15px;
+}

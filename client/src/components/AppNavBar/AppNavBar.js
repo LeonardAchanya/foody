@@ -7,7 +7,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem
-  // NavLink as BstNavLink,
 } from "reactstrap";
 
 class AppNavbar extends Component {
@@ -24,8 +23,8 @@ class AppNavbar extends Component {
   render() {
     return (
       <div>
-        <Navbar dark expand="md" style={{backgroundColor:"orange"}}>
-          <NavbarBrand style={{color:"whitesmoke"}}>Foody</NavbarBrand>
+        <Navbar light expand="md" style={{boxShadow: "0px 0px 10px grey" }}>
+          <NavbarBrand>Foody</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

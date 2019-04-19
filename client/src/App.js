@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { Container } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -37,7 +36,7 @@ class App extends Component {
     return (
       <div className="App">
         <AppNavbar isAuth={this.props.isAuth} />
-        <Container>{routes}</Container>
+        {routes}
       </div>
     );
   }

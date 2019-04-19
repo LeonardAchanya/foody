@@ -20,11 +20,6 @@ import {
 import { addRecipe, addRecipeInit } from "../store/actions/recipe";
 
 class AddRecipe extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	// Sets the "jobCreated" state to false when component is mounted
-	// 	this.props.onAddJobInit();
-	// }
 	state = {
 		title: "",
 		description: "",
@@ -52,9 +47,7 @@ class AddRecipe extends Component {
 		image: this.state.image,
 		categoryId: this.state.categoryId
 	};
-	// Sets the "jobCreated" state to true on success,
-	// this to redirect to home because we're using
-	// the <Redirect /> component.
+	
 	this.props.onAddRecipe(formData);
 };
 

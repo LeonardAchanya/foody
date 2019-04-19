@@ -1,27 +1,29 @@
 import React from 'react';
-import {Col ,Card, CardText, CardBody, CardLink, CardTitle, CardSubtitle} from 'reactstrap';
 
-const RecipeCard = ({recipes}) => {
+import "./RecipeCard.css";
+
+const RecipeCard2 = ({recipes}) => {
     return (
         <>
-			{recipes.map(recipe => (
-            <Col key={recipe.id} sm="4" style={{marginBottom:"10px"}}>
-                <Card >
-                    <CardBody>
-                        <CardTitle>{recipe.title}</CardTitle>
-                        <CardSubtitle>by {recipe.user.firstname+ " "+ recipe.user.lastname}</CardSubtitle>
-                    </CardBody>
-                    {/* <img width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Recipe" /> */}
-                    <CardBody>
-                        <CardText>{recipe.description}</CardText>
-                        <CardLink href={`recipe/`+ recipe.id}>Card Link</CardLink>
-                        <CardLink href="#">Another Link</CardLink>
-                    </CardBody>
-                </Card>
-            </Col>
+           {recipes.map(recipe => (
+                <div className="recipe-card" key={recipe.id}>
+                <img src={`http://localhost:5000/${recipe.imageUrl}`}alt="recipe img"/>
+                    <div className="recipe-details">
+                        <h3 className="recipe-title">{recipe.title}</h3>
+                        <h6 className="recipe-category">{recipe.category.title}</h6>
+                        <p className="recipe-description">{recipe.description}</p>
+                    </div>
+                    <div className="recipe-actions">
+                        {/* <i class="far fa-bookmark"></i>  */}
+                        <i className="fas fa-bookmark"></i>
+                        <i className="far fa-heart">12</i>
+                        <i className="far fa-comment-alt">123</i>
+                    </div>
+                </div>
             ))}
-        </>
-    );
-};
 
-export default RecipeCard;
+        </>
+            );
+        };
+        
+export default RecipeCard2;
