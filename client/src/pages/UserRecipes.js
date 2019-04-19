@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Spinner } from "reactstrap";
+import { Container, Row, Spinner } from "reactstrap";
 
 import RecipeCard from "../components/RecipeCard/RecipeCard";
 import { getUserRecipes } from "../store/actions/recipe";
@@ -11,7 +11,7 @@ componentDidMount(){
 }
     render() {
         return (
-            <>
+            <Container>
                 <h2>My Recipes</h2>
                 <Row>
                     {this.props.isLoading ? (
@@ -22,7 +22,7 @@ componentDidMount(){
                         <RecipeCard  recipes={this.props.recipes}/>
                         )}
                 </Row>
-            </>
+            </Container>
         )
     }
 }

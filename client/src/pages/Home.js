@@ -42,7 +42,7 @@ class Home extends Component {
                         {this.props.isLoading ? (
                             <h2>Loading, please wait</h2>
                         ):(
-                            <button class="show-more">Show more</button>
+                            <button className="show-more">Show more</button>
                         )}
                         </div>
                 </section>

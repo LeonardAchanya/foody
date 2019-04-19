@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { Editor } from '@tinymce/tinymce-react';
+
 import {
 	Button,
 	Form,
 	FormGroup,
-    Card,
-    CardHeader,
-    CardBody,
+	Card,
+	CardHeader,
+	CardBody,
 	// Label,
 	FormText,
-    Input,
+	Input,
 	Spinner,
 	Alert,
 	Row,
@@ -33,23 +35,29 @@ class AddRecipe extends Component {
 		});
 	};
 
+	handleEditorChange = (e) => {
+		this.setState({
+			description: e.target.getContent()
+		});
+	}
+
 	onImgChanged = e => {
 		this.setState({
 			image: e.target.files[0]
 		});
-  };
-
-  save = e => {
-	e.preventDefault();
-	const formData = {
-		title: this.state.title,
-		description: this.state.description,
-		image: this.state.image,
-		categoryId: this.state.categoryId
 	};
-	
-	this.props.onAddRecipe(formData);
-};
+
+	save = e => {
+		e.preventDefault();
+		const formData = {
+			title: this.state.title,
+			description: this.state.description,
+			image: this.state.image,
+			categoryId: this.state.categoryId
+		};
+
+		this.props.onAddRecipe(formData);
+	};
 
 	render() {
 		return (
@@ -57,65 +65,67 @@ class AddRecipe extends Component {
 				<Row>
 					<Col md={{ size: 6, offset: 3 }}>
 						{this.props.recipeCreated && <Redirect to="/" />}
-                        <Card style={{marginTop:"10px"}}>
-                            <CardHeader tag="h2">Upload Recipe</CardHeader>
-                                <CardBody>
-                                    <Form onSubmit={this.save} encType = "multipart/form-data">
-							{this.props.error && (
-								<Alert color="danger">{this.props.error.msg}</Alert>
-                            )}
-                            
-							<FormGroup>
-								{/* <Label for="Recipe Title">Title</Label> */}
-								<Input
-									type="text"
-									name="title"
-									id="title"
-									placeholder="Recipe Title"
-									onChange={this.onChanged}
-								/>
-							</FormGroup>
-							<FormGroup>
-								{/* <Label for="recipeImage">Recipe Picture</Label> */}
-									<Input
-									type="file"
-									name="image"
-									id="recipeImage"
-									accept=".jpg, .jpeg, .png"
-									onChange={this.onImgChanged}
-									/>
-									<FormText color="muted">
+						<Card style={{ marginTop: "10px" }}>
+							<CardHeader tag="h2">Upload Recipe</CardHeader>
+							<CardBody>
+								<Form onSubmit={this.save} encType="multipart/form-data">
+									{this.props.error && (
+										<Alert color="danger">{this.props.error.msg}</Alert>
+									)}
+
+									<FormGroup>
+										{/* <Label for="Recipe Title">Title</Label> */}
+										<Input
+											type="text"
+											name="title"
+											id="title"
+											placeholder="Recipe Title"
+											onChange={this.onChanged}
+										/>
+									</FormGroup>
+									<FormGroup>
+										{/* <Label for="recipeImage">Recipe Picture</Label> */}
+										<Input
+											type="file"
+											name="image"
+											id="recipeImage"
+											accept=".jpg, .jpeg, .png"
+											onChange={this.onImgChanged}
+										/>
+										<FormText color="muted">
 											Recipe Image must be png, jpg or jpeg format.
 									</FormText>
-							</FormGroup>
-                            <FormGroup>
-                                {/* <Label for="recipe category">Select Category</Label> */}
-                                <Input type="select" name="categoryId" id="categoryId" onChange={this.onChanged}>
-                                     <option value="">Select Recipe Category</option>
-                                     <option value="1">African Dish</option>
-                                     <option value="2">British Dish</option>
-                                     <option value="3">Jamaican Dish</option>
-                                </Input>
-                            </FormGroup><FormGroup>
-								{/* <Label for="recipe description">Description</Label> */}
-								<Input
-                                    type="textarea"
-                                    rows="7"
-									name="description"
-									id="description"
-									placeholder="Recipe Description"
-									onChange={this.onChanged}
-								/>
-							</FormGroup>
-                            
-							{this.props.isLoading ? (
-								<Spinner color="danger" />
-							) : (
-								<Button color="danger">Add</Button>
-							)}
-						</Form>
-                        </CardBody>
-                        </Card>
+									</FormGroup>
+									<FormGroup>
+										{/* <Label for="recipe category">Select Category</Label> */}
+										<Input type="select" name="categoryId" id="categoryId" onChange={this.onChanged}>
+											<option value="">Select Recipe Category</option>
+											<option value="1">African Dish</option>
+											<option value="2">British Dish</option>
+											<option value="3">Jamaican Dish</option>
+										</Input>
+									</FormGroup>
+									<FormGroup>
+										<Editor
+											initialValue="<p>Recipe Description</p>"
+											init={{
+												plugins: 'link image code',
+												toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+											}}
+											name="description"
+											id="description"
+											onChange={this.handleEditorChange}
+										/>
+										</FormGroup>
+
+									{this.props.isLoading ? (
+										<Spinner color="danger" />
+									) : (
+											<Button color="danger">Add</Button>
+										)}
+								</Form>
+							</CardBody>
+						</Card>
 					</Col>
 				</Row>
 			</>

@@ -78,7 +78,9 @@ import {
         <Row>
           <Col md={{ size: 6, offset: 3 }}>
             <Card style={{marginTop:"10px"}}>
-              <CardHeader tag="h2">Login</CardHeader>
+              <CardHeader tag="h2">
+              {!isLogin ? <h2>Create an Account</h2> : <h2>Login</h2>}
+              </CardHeader>
               <CardBody>
                 {error && <Alert color="danger">{this.props.error.msg}</Alert>}
                 <Form onSubmit={this.submitForm} action="POST" encType={

@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import "./RecipeCard.css";
 
@@ -7,11 +8,12 @@ const RecipeCard2 = ({recipes}) => {
         <>
            {recipes.map(recipe => (
                 <div className="recipe-card" key={recipe.id}>
-                <img src={`http://localhost:5000/${recipe.imageUrl}`}alt="recipe img"/>
+                <img src={`http://localhost:5000/${recipe.imageUrl}`} alt="recipe img"/>
                     <div className="recipe-details">
                         <h3 className="recipe-title">{recipe.title}</h3>
                         <h6 className="recipe-category">{recipe.category.title}</h6>
-                        <p className="recipe-description">{recipe.description}</p>
+                        <p className="recipe-description">{recipe.description} <NavLink to={`recipe/`+ recipe.id}>Read More</NavLink></p>
+                        
                     </div>
                     <div className="recipe-actions">
                         {/* <i class="far fa-bookmark"></i>  */}
