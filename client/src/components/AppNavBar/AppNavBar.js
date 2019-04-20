@@ -61,7 +61,7 @@ class AppNavbar extends Component {
                 {this.props.isAuth ? (
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                      {this.props.user && this.props.user.name}
+                      {this.props.user && this.props.user.username}
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem>

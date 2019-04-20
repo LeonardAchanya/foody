@@ -100,7 +100,7 @@ export const loadAuthUser = () => (dispatch, getState) => {
 	axios
 		.get("/auth/user", config)
 		.then(res => {
-			console.log(res.data);
+			// console.log(res.data);
 			dispatch(loadAuthUserSuccess(res.data));
 		})
 		.catch(error =>

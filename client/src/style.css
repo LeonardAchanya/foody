@@ -92,6 +92,11 @@
     padding: 10px;
 }
 
+.phase3 h5{
+    font-size: 15px;
+    color: rgb(164, 170, 178);
+}
+
 .phase3 p {
     font-size: 25px;
     padding-left: 100px;

@@ -1,41 +1,59 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
- const User = require("../models/users");
+const User = require("../models/users");
 
- exports.postLogin = (req, res, next) => {
-    const { email, password } = req.body;
-    if(!email || !password) {
-        res.status(400).json({ msg: "All Field are required" })
-    }else {
-        User.findOne({
-            where: { email }
-        }).then(user => {
-            if(!user) {
-                return res.status(400).json({ msg: "Invalid Email" })
-            }
-            bcrypt.compare(password, user.password)
-                .then(match => {
-                    if(!match) {
-                        return res.status(400).json({ msg: "Invalid Password" })
-                    }
-                    jwt.sign(
-                        { id: user.id }, 
-                        process.env.AUTH_SECRET_KEY, 
-                        (err, token) => {
-                            res.json({
-                                token,
-                                user: {
-                                    id: user.id,
-                                    name: user.firstname+" "+user.lastname,
-                                    email: user.email
-                                }
-                            })
-                        });
-                })
-                .catch(err => {
-                    next(err)
-                })
-        }).catch(err => next(err))
-    }
-}
+exports.postLogin = (req, res, next) => {
+	const { email, password } = req.body;
+	if (!email || !password) {
+		res.status(400).json({ msg: "All Field are required" });
+	} else {
+		User.findOne({
+			where: { email }
+		})
+			.then(user => {
+				if (!user) {
+					return res.status(400).json({ msg: "Invalid Email" });
+				}
+				bcrypt
+					.compare(password, user.password)
+					.then(match => {
+						if (!match) {
+							return res.status(400).json({ msg: "Invalid Password" });
+						}
+						const exp = Math.floor(Date.now() / 1000) + 60 * 60; // 1hr
+						jwt.sign(
+							{ userId: user.id },
+							process.env.AUTH_SECRET_KEY,
+							{ expiresIn: "1h" },
+							(err, token) => {
+								// console.log("Token: ", token);
+								res.json({
+									token,
+									user
+								});
+							}
+						);
+					})
+					.catch(err => {
+						next(err);
+					});
+			})
+			.catch(err => next(err));
+	}
+};
+
+exports.getCurrentUser = (req, res, next) => {
+	const userId = req.userId;
+	User.findByPk(userId, {
+		attributes: { exclude: ["password", "updatedAt"] }
+	})
+		.then(user => {
+			res.json(user);
+		})
+		.catch(error =>
+			res
+				.status(500)
+				.json({ msg: "Something went wrong while fetching the user", error })
+		);
+};

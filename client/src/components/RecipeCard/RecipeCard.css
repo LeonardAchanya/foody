@@ -13,16 +13,18 @@
     object-fit: cover;
 }
 
-.recipe-details {
-    padding: 25px;
-}
-
 .recipe-title {
-    font-size: 16px;
+    font-size: 20px;
     margin-bottom: 5px;
 }
 
 .recipe-category {
+    color: rgb(198, 199, 204);
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.recipe-user {
     color: rgb(198, 199, 204);
     font-size: 12px;
     margin-bottom: 10px;

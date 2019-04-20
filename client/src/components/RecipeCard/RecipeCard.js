@@ -11,7 +11,8 @@ const RecipeCard = ({recipes,isAuth}) => {
                 <img src={`http://localhost:5000/${recipe.imageUrl}`} alt="recipe img"/>
                     <div className="recipe-details">
                         <h3 className="recipe-title">{recipe.title}</h3>
-                        <h6 className="recipe-category">{recipe.category.title}</h6>
+                        <h5 className="recipe-category">{recipe.category.title}</h5>
+                        <h6 className="recipe-user">by {recipe.user.username}</h6>
                         <p className="recipe-description">{recipe.description} <NavLink to={`recipe/`+ recipe.id}>Read More</NavLink></p>
                         
                     </div>

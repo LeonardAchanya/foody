@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Moment from "react-moment";
 import { Spinner, Container } from "reactstrap";
 
 import Footer from "../components/Footer/Footer";
@@ -29,6 +30,8 @@ class RecipeDetail extends Component {
 										<section className="phase3">
 											<img src={`http://localhost:5000/${recipe && recipe.imageUrl}`} alt="recipe" />
 											<h4>by {recipe && recipe.user.firstname} {recipe && recipe.user.lastname}</h4>
+											<h5>Created <Moment fromNow>{recipe && recipe.updatedAt}</Moment></h5>
+
 											<h2>How is it done?</h2>
 											<p>{recipe && recipe.description}</p>
 

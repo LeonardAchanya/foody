@@ -57,7 +57,7 @@ export const getUserRecipes = () => {
 			config.headers["x-access-token"] = token;
 		}
 		axios
-			.get("/recipe/user/recipes")
+			.get("/recipe/user/recipes", config)
 			.then(res => {
 				dispatch(getUserRecipesSuccess(res.data));
 			})
