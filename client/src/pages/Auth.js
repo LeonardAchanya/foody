@@ -79,7 +79,7 @@ import {
           <Col md={{ size: 6, offset: 3 }}>
             <Card style={{marginTop:"10px"}}>
               <CardHeader tag="h2">
-              {!isLogin ? <h2>Create an Account</h2> : <h2>Login</h2>}
+              {!isLogin ? "Create an Account": "Login"}
               </CardHeader>
               <CardBody>
                 {error && <Alert color="danger">{this.props.error.msg}</Alert>}

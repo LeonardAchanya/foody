@@ -3,6 +3,7 @@ import * as types from "../actions/types";
  const initialState = {
   token: localStorage.getItem("token"),
   userId: localStorage.getItem("userId"),
+  user: null,
   isLoading: false,
   error: null,
   isLogin: true
@@ -11,6 +12,7 @@ import * as types from "../actions/types";
  const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.AUTH_START:
+    case types.LOAD_AUTH_USER_START:
       return {
         ...state,
         isLoading: true
@@ -20,6 +22,7 @@ import * as types from "../actions/types";
         ...state,
         token: action.token,
         userId: action.userId,
+        user: action.user,
         isLoading: false,
         isLogin: true,
         error: null
@@ -32,6 +35,7 @@ import * as types from "../actions/types";
         ...state,
         token: null,
         userId: null,
+        user: null,
         isLoading: false,
         error: action.error
       };
@@ -40,6 +44,12 @@ import * as types from "../actions/types";
         ...state,
         isLogin: !state.isLogin
       };
+      case types.LOAD_AUTH_USER_SUCCESS:
+			return {
+				...state,
+				user: action.user,
+				isLoading: false
+			};
     default:
       return state;
   }

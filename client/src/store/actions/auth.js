@@ -5,10 +5,12 @@ import * as types from "./types";
   type: types.AUTH_START
 });
 
- export const authSuccess = (token, userId) => ({
+ export const authSuccess = (token, userId, user) => ({
   type: types.AUTH_SUCCESS,
   token,
-  userId
+  userId,
+	user
+
 });
 
  export const authFailed = error => ({
@@ -48,7 +50,7 @@ import * as types from "./types";
       const userId = user.id;
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
-      dispatch(authSuccess(token, userId));
+      dispatch(authSuccess(token, userId, user));
     })
     .catch(err => dispatch(authFailed(err.response.data)));
 };
@@ -60,3 +62,51 @@ import * as types from "./types";
  export const logout = () => ({
   type: types.LOGOUT_SUCCESS
 });
+
+
+// Automatically logs in the user when the user visits the page
+// but only does that if his/her credentials are still valid
+// We call the at the root (App) component.
+export const authAutoLogin = () => (dispatch, getState) => {
+	const { token, userId } = getState().auth;
+	// const token = localStorage.getItem("token");
+	// const userId = localStorage.getItem("userId");
+	if (!token) {
+		dispatch(logout());
+	} else {
+		dispatch(authSuccess(token, userId));
+	}
+};
+
+const loadAuthUserSuccess = user => ({
+	type: types.LOAD_AUTH_USER_SUCCESS,
+	user
+});
+
+export const loadAuthUser = () => (dispatch, getState) => {
+	dispatch({ type: types.LOAD_AUTH_USER_START });
+	const token = getState().auth.token;
+	// Headers
+	const config = {
+		headers: {
+			"Content-Type": "application/json"
+		}
+	};
+
+	// If token, add to headers
+	if (token) {
+		config.headers["x-access-token"] = token;
+	}
+	axios
+		.get("/auth/user", config)
+		.then(res => {
+			console.log(res.data);
+			dispatch(loadAuthUserSuccess(res.data));
+		})
+		.catch(error =>
+			dispatch({
+				type: types.LOAD_AUTH_USER_FAILED,
+				error: error.message
+			})
+		);
+};

@@ -39,6 +39,7 @@ exports.postAddUser = (req, res, next) => {
                             jwt.sign(
                                 { id: user.id },
                                 process.env.AUTH_SECRET_KEY,
+                                { expiresIn: "1h" },
                                 (err, token) => {
                                     res.json({
                                         token,

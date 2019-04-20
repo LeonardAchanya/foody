@@ -6,7 +6,11 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem
+  NavItem,
+  UncontrolledDropdown,
+	DropdownToggle,
+	DropdownItem,
+	DropdownMenu
 } from "reactstrap";
 
 class AppNavbar extends Component {
@@ -23,7 +27,7 @@ class AppNavbar extends Component {
   render() {
     return (
       <>
-        <Navbar light expand="md" style={{boxShadow: "0px 0px 10px grey" }}>
+        <Navbar light expand="md" style={{ boxShadow: "0px 0px 10px grey" }}>
           <NavbarBrand>Foody</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -39,35 +43,46 @@ class AppNavbar extends Component {
                 </NavLink>
               </NavItem>
               {this.props.isAuth && (
-                 <>
+                <>
                   <NavItem>
                     <NavLink to="/add-recipe" className="nav-link">
                       Upload Recipe
                     </NavLink>
                   </NavItem>
-              
-                <NavItem>
-                  <NavLink to="/my-recipes" className="nav-link">
-                    My Recipes
+
+                  <NavItem>
+                    <NavLink to="/my-recipes" className="nav-link">
+                      My Recipes
                   </NavLink>
-                </NavItem>
-                  </>
+                  </NavItem>
+                </>
               )}
-              <NavItem>
+              {/* <NavItem> */}
                 {this.props.isAuth ? (
-                  <NavLink to="/logout" className="nav-link">
-                    Logout
-                  </NavLink>
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      {this.props.user && this.props.user.name}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>
+                        <NavLink to="/edit-profile">Edit Profile</NavLink>
+                      </DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem>
+                        <NavLink to="/logout">Logout</NavLink>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
                 ) : (
-                  <NavLink to="/auth" className="nav-link">
-                    Login
+                    <NavLink to="/auth" className="nav-link">
+                      Login
                   </NavLink>
-                )}
-              </NavItem>
+                  )}
+              {/* </NavItem> */}
             </Nav>
           </Collapse>
         </Navbar>
-        </>
+      </>
     );
   }
 }
