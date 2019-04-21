@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import ReactHtmlParser from 'react-html-parser';
+import striptags from 'striptags';
 
 
 import "./RecipeCard.css";
@@ -15,7 +15,7 @@ const RecipeCard = ({recipes,isAuth}) => {
                         <h3 className="recipe-title">{recipe.title}</h3>
                         <h5 className="recipe-category">{recipe.category.title}</h5>
                         <h6 className="recipe-user">by {recipe.user.username}</h6>
-                        <div className="recipe-description">{ReactHtmlParser(recipe.description)} <NavLink to={`recipe/`+ recipe.id}>Read More</NavLink></div>
+                        <div className="recipe-description">{striptags(recipe.description).slice(0,25)+"..."} <NavLink to={`recipe/`+ recipe.id}>Read More</NavLink></div>
                         
                     </div>
                     {isAuth? 
