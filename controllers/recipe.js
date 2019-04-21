@@ -96,3 +96,29 @@ exports.postRecipe = (req, res) => {
 				.json({ msg: "Something went wrong while creating recipe", error: err })
 		);
 };
+
+exports.postUpdateRecipe=(req,res,next)=>{
+	console.log('update recipe');
+};
+
+exports.deleteRecipe = (req, res) => {
+	const recipeId = req.params.id;
+	Recipe.findByPk(recipeId)
+		.then(recipe => {
+			if (recipe.userId !== req.userId) {
+				res
+					.status(401)
+					.json({ msg: "You can't delete a recipe you did not create" });
+			} else {
+				recipe
+					.destroy()
+					.then(() => {
+						res.json({ success: true });
+					})
+					.catch(err => res.json({ success: false }));
+			}
+		})
+		.catch(err =>
+			res.json({ success: false, message: "This Recipe doesnt exists" })
+		);
+};

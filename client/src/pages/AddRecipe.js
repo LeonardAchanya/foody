@@ -107,9 +107,8 @@ class AddRecipe extends Component {
 									</FormGroup>
 									<FormGroup>
 										<Editor
-											initialValue="<p>Recipe Description</p>"
 											init={{
-												plugins: 'link image code',
+												plugins: 'link code',
 												toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
 											}}
 											name="description"

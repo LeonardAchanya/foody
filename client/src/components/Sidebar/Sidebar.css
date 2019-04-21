@@ -8,18 +8,35 @@
     flex-direction: column;
 }
 
+.sidebar h5{
+    font-size: 20px;
+    margin-bottom: 20px; 
+}
 .sidebar input {
     border: 1px solid #a5a5a5;
     border-radius: 15px;
-    padding: 10px;
-    margin: 20px;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    margin-bottom: 20px;
 }
 
 .sidebar select {
-    border: 1px solid #a5a5a5;
-    border-radius: 15px;
-    padding: 10px;
-    margin: 20px;
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .sidebar button {
@@ -28,5 +45,4 @@
     padding: 15px 83px;
     background-color: rgb(80, 167, 119);
     color: white;
-    margin: 20px;
 }

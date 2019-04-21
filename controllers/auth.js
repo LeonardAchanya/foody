@@ -21,7 +21,7 @@ exports.postLogin = (req, res, next) => {
 						if (!match) {
 							return res.status(400).json({ msg: "Invalid Password" });
 						}
-						const exp = Math.floor(Date.now() / 1000) + 60 * 60; // 1hr
+						// const exp = Math.floor(Date.now() / 1000) + 60 * 60; // 1hr
 						jwt.sign(
 							{ userId: user.id },
 							process.env.AUTH_SECRET_KEY,

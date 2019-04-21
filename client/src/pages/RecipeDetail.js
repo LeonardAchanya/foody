@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Moment from "react-moment";
+import ReactHtmlParser from 'react-html-parser';
 import { Spinner, Container } from "reactstrap";
 
 import Footer from "../components/Footer/Footer";
@@ -33,7 +34,7 @@ class RecipeDetail extends Component {
 											<h5>Created <Moment fromNow>{recipe && recipe.updatedAt}</Moment></h5>
 
 											<h2>How is it done?</h2>
-											<p>{recipe && recipe.description}</p>
+											<p>{recipe && ReactHtmlParser(recipe.description)}</p>
 
 											{isAuth ?
 
