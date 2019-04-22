@@ -25,6 +25,7 @@ const RecipeCard = ({recipes,isAuth,removeRecipe}) => {
                         <i className="fas fa-bookmark"></i>
                         <i className="far fa-heart">12</i>
                         <i className="far fa-comment-alt">123</i>
+                    
                     <button onClick={() => removeRecipe(recipe.id)}>DELETE</button>
 
                     </div>
