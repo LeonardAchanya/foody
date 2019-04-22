@@ -5,7 +5,7 @@ import striptags from 'striptags';
 
 import "./RecipeCard.css";
 
-const RecipeCard = ({recipes,isAuth}) => {
+const RecipeCard = ({recipes,isAuth,removeRecipe}) => {
     return (
         <>
            {recipes.map(recipe => (
@@ -19,12 +19,17 @@ const RecipeCard = ({recipes,isAuth}) => {
                         
                     </div>
                     {isAuth? 
+                    <>
                     <div className="recipe-actions">
                         {/* <i class="far fa-bookmark"></i>  */}
                         <i className="fas fa-bookmark"></i>
                         <i className="far fa-heart">12</i>
                         <i className="far fa-comment-alt">123</i>
+                    <button onClick={() => removeRecipe(recipe.id)}>DELETE</button>
+
                     </div>
+
+                    </>
                     :
                     ""
                     }

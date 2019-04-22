@@ -68,10 +68,10 @@ import * as types from "./types";
 // but only does that if his/her credentials are still valid
 // We call the at the root (App) component.
 export const authAutoLogin = () => (dispatch, getState) => {
-	const { token, userId, user } = getState().auth;
+	const { token, userId } = getState().auth;
 	// const token = localStorage.getItem("token");
 	// const userId = localStorage.getItem("userId");
-	if (!user) {
+	if (!token) {
 		dispatch(logout());
 	} else {
 		dispatch(authSuccess(token, userId));

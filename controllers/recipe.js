@@ -98,7 +98,7 @@ exports.postRecipe = (req, res) => {
 };
 
 exports.postUpdateRecipe=(req,res,next)=>{
-	console.log('update recipe');
+	console.log(req.body);
 };
 
 exports.deleteRecipe = (req, res) => {

@@ -5,6 +5,7 @@ const initialState = {
 	recipe: null,
 	isLoading: false,
 	recipeCreated: false,
+	recipeDeleted: false,
 	error: null
 };
 
@@ -39,6 +40,19 @@ const reducer = (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				recipeCreated: true,
+				error: null
+			};
+		case types.DELETE_RECIPE_INIT:
+			return {
+				...state,
+				recipeDeleted: false,
+				error: null
+			};
+		case types.DELETE_RECIPE_SUCCESS:
+			return {
+				...state,
+				isLoading: false,
+				recipeDeleted: true,
 				error: null
 			};
 		case types.LOADING:

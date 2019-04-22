@@ -116,3 +116,36 @@ export const addRecipe = recipeData => {
 			.catch(err => dispatch(errorOccured(err.response.data)));
 	};
 };
+
+export const deleteRecipeInit = () => {
+	return {
+		type: types.DELETE_RECIPE_INIT
+	};
+};
+
+// This is possible because of the redux-thunk middleware
+export const deleteRecipe = recipeId => {
+	return (dispatch, getState) => {
+		dispatch(loading());
+		const token = getState().auth.token;
+
+		// Headers
+		const config = {
+			headers: {}
+		};
+
+		// If token, add to headers
+		if (token) {
+			config.headers["x-access-token"] = token;
+		}
+		axios
+			.delete(`recipe/${recipeId}`, config)
+			.then(res => {
+				return dispatch({ type: types.DELETE_RECIPE_SUCCESS });
+			})
+			.then(() => {
+				dispatch(deleteRecipeInit());
+			})
+			.catch(err => dispatch(errorOccured(err.response.data)));
+	};
+};
