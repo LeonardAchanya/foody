@@ -34,7 +34,9 @@ class RecipeDetail extends Component {
 											<h5>Created <Moment fromNow>{recipe && recipe.updatedAt}</Moment></h5>
 
 											<h2>How is it done?</h2>
-											<p>{recipe && ReactHtmlParser(recipe.description)}</p>
+											<div className="description">
+												{recipe && ReactHtmlParser(recipe.description)}
+											</div>
 
 											{isAuth ?
 

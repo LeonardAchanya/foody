@@ -1,6 +1,6 @@
 .recipe-card {
     width: 215px;
-    height: 370px;
+    height: 380px;
     border-radius: 12px;
     margin: 10px;
     box-shadow: 0px 0px 10px grey;
@@ -38,7 +38,7 @@
 .recipe-actions {
     border-top: 2px solid rgb(241, 241, 241);
     position: absolute;
-    bottom: 0px;
+    /* bottom: 0px; */
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
@@ -48,4 +48,6 @@
 .recipe-actions i{
     padding-left: 18px;
     padding-right: 18px;
+    color: rgb(80, 167, 119);
+
 }

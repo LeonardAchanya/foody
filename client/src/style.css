@@ -97,11 +97,11 @@
     color: rgb(164, 170, 178);
 }
 
-.phase3 p {
+.phase3 .description {
     font-size: 25px;
-    padding-left: 100px;
+    /* padding-left: 100px; */
     padding-top: 50px;
-    padding-right: 100px;
+    /* padding-right: 100px; */
     padding-bottom: 50px;
 }
 
