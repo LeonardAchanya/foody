@@ -19,9 +19,12 @@ import {
 	Col
 } from "reactstrap";
 
-import { addRecipe, addRecipeInit } from "../store/actions/recipe";
+import {
+	editRecipe, 
+	editRecipeInit
+} from "../store/actions/recipe";
 
-class AddRecipe extends Component {
+class EditRecipe extends Component {
 	state = {
 		title: "",
 		description: "",
@@ -29,6 +32,16 @@ class AddRecipe extends Component {
 		categoryId: ""
 	};
 
+	componentDidMount = () => {
+		const recipeId = +this.props.match.params.id;
+		this.props.onEditRecipeInit(recipeId);
+
+	};
+
+	cancel = ()=>{
+		// eslint-disable-next-line
+		const goback = +this.props.history.goBack("/my-recipes");
+	}
 	onChanged = e => {
 		this.setState({
 			[e.target.name]: e.target.value
@@ -56,16 +69,16 @@ class AddRecipe extends Component {
 			categoryId: this.state.categoryId
 		};
 
-		this.props.onAddRecipe(formData);
+		this.props.onEditRecipe(formData);
 	};
 
 	render() {
 		return (
 			<>
 					<Col md={{ size: 6, offset: 3 }}>
-						{this.props.recipeCreated && <Redirect to="/" />}
+						{this.props.recipeUpdated && <Redirect to="/my-recipes" />}
 						<Card style={{ marginTop: "10px" }}>
-							<CardHeader tag="h2">Upload Recipe</CardHeader>
+							<CardHeader tag="h2">Edit Recipe</CardHeader>
 							<CardBody>
 								<Form onSubmit={this.save} encType="multipart/form-data">
 									{this.props.error && (
@@ -79,6 +92,7 @@ class AddRecipe extends Component {
 											name="title"
 											id="title"
 											placeholder="Recipe Title"
+											defaultValue={this.props.recipe && this.props.recipe.title}
 											onChange={this.onChanged}
 										/>
 									</FormGroup>
@@ -97,7 +111,9 @@ class AddRecipe extends Component {
 									</FormGroup>
 									<FormGroup>
 										{/* <Label for="recipe category">Select Category</Label> */}
-										<Input type="select" name="categoryId" id="categoryId" onChange={this.onChanged}>
+										<Input type="select" name="categoryId" id="categoryId" 
+										defaultValue={this.props.recipe && this.props.recipe.categoryId}
+										onChange={this.onChanged}>
 											<option value="">Select Recipe Category</option>
 											<option value="1">African Dish</option>
 											<option value="2">British Dish</option>
@@ -106,6 +122,7 @@ class AddRecipe extends Component {
 									</FormGroup>
 									<FormGroup>
 										<Editor
+											initialValue={this.props.recipe && this.props.recipe.description}
 											init={{
 												plugins: 'link code',
 												toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
@@ -114,12 +131,15 @@ class AddRecipe extends Component {
 											id="description"
 											onChange={this.handleEditorChange}
 										/>
-										</FormGroup>
+									</FormGroup>
 
 									{this.props.isLoading ? (
 										<Spinner color="danger" />
 									) : (
-											<Button color="danger">Add</Button>
+											<div style={{display:"flex", justifyContent:"space-around"}}>
+											<Button color="danger" onClick={this.cancel}>Cancel</Button>
+											<Button color="success">Update</Button>
+											</div>
 										)}
 								</Form>
 							</CardBody>
@@ -132,16 +152,20 @@ class AddRecipe extends Component {
 
 const mapStateToProps = state => ({
 	isLoading: state.recipe.isLoading,
-	recipeCreated: state.recipe.recipeCreated,
+	recipeUpdated: state.recipe.recipeUpdated,
+	recipe: state.recipe.recipe,
+	isAuth: state.auth.token !== null,
 	error: state.recipe.error
 });
 
 const mapDispatchToProps = dispatch => ({
-	onAddRecipeInit: () => dispatch(addRecipeInit()),
-	onAddRecipe: formData => dispatch(addRecipe(formData))
+	onEditRecipeInit: (recipeId) => dispatch(editRecipeInit(recipeId)),
+	onEditRecipe: (formData) => dispatch(editRecipe(formData))
 });
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(AddRecipe);
+)(EditRecipe);
+
+// export default EditRecipe;

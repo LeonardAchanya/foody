@@ -98,7 +98,35 @@ exports.postRecipe = (req, res) => {
 };
 
 exports.postUpdateRecipe=(req,res,next)=>{
-	console.log(req.body);
+	// console.log(req.body);
+	const { title,description,categoryId } = req.body;
+	const UserId = req.userId;
+	const recipeId = req.params.id;
+    let imageUrl = null;
+	if (req.file) {
+		imageUrl = req.file.path;
+	}
+	Recipe.findByPk(recipeId)
+		.then((recipe)=>{
+			if(recipe.userId != UserId){
+				console.log("no be you create am")
+			}else{
+				recipe.update({
+					title,
+					description,
+					imageUrl,
+					categoryId
+				})
+				.then(recipe => {
+					res.json(recipe);
+				}).catch((err)=>next(err))
+			}
+		})
+		.catch(err =>
+			res
+				.status(500)
+				.json({ msg: "Recipe does not exist", error: err })
+		);
 };
 
 exports.deleteRecipe = (req, res) => {

@@ -6,6 +6,7 @@ const initialState = {
 	isLoading: false,
 	recipeCreated: false,
 	recipeDeleted: false,
+	recipeUpdated:false,
 	error: null
 };
 
@@ -40,6 +41,26 @@ const reducer = (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				recipeCreated: true,
+				error: null
+			};
+			case types.EDIT_RECIPE_INIT:
+			return {
+				...state,
+				recipeUpdated: false,
+				recipe: action.recipe,
+				error: null
+			};
+		case types.EDIT_RECIPE_SUCCESS:
+			return {
+				...state,
+				isLoading: false,
+				recipeUpdated: true,
+				error: null
+			};
+			case types.EDIT_RECIPE_DONE:
+			return {
+				...state,
+				recipeUpdated: false,
 				error: null
 			};
 		case types.DELETE_RECIPE_INIT:

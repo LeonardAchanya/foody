@@ -28,7 +28,6 @@ export const errorOccured = error => {
 	};
 };
 
-// This is possible because of the redux-thunk middleware
 export const getRecipes = () => {
 	return dispatch => {
 		dispatch(loading());
@@ -43,7 +42,7 @@ export const getRecipes = () => {
 
 
 export const getUserRecipes = () => {
-	return (dispatch,getState) => {
+	return (dispatch, getState) => {
 		dispatch(loading());
 		const token = getState().auth.token;
 
@@ -52,7 +51,6 @@ export const getUserRecipes = () => {
 			headers: {}
 		};
 
-		// If token, add to headers
 		if (token) {
 			config.headers["x-access-token"] = token;
 		}
@@ -83,19 +81,16 @@ export const addRecipeInit = () => {
 	};
 };
 
-// This is possible because of the redux-thunk middleware
 export const addRecipe = recipeData => {
 	return (dispatch, getState) => {
 		dispatch(loading());
 		const token = getState().auth.token;
 		let formData = null;
 
-		// Headers
 		const config = {
 			headers: {}
 		};
 
-		// If token, add to headers
 		if (token) {
 			config.headers["x-access-token"] = token;
 			config.headers["Content-Type"] = "multipart/form-data";
@@ -117,24 +112,86 @@ export const addRecipe = recipeData => {
 	};
 };
 
+export const editRecipeInit = recipeId => {
+	return (dispatch, getState) => {
+		const token = getState().auth.token;
+		const userId = getState().auth.userId;
+
+		const config = {
+			headers: {}
+		};
+
+		if (token) {
+			config.headers["x-access-token"] = token;
+		}
+
+		axios
+			.get(`recipe/edit/${recipeId}`, config)
+			.then(res => {
+				// eslint-disable-next-line
+				if (res.data.userId != userId) {
+					console.log("recipe userId dont match");
+				} else {
+					// console.log(res.data)
+					dispatch({ type: types.EDIT_RECIPE_INIT, recipe: res.data });
+				}
+			})
+			.catch(err => dispatch(errorOccured(err)));
+	};
+};
+
+export const editRecipeDone= () => {
+	return {
+		type: types.EDIT_RECIPE_DONE
+	};
+};
+
+export const editRecipe = (recipeData) => {
+	return (dispatch, getState) => {
+		dispatch(loading());
+		const token = getState().auth.token;
+		const recipeId = getState().recipe.recipe.id;
+		let formData = null;
+
+		const config = {
+			headers: {}
+		};
+
+		if (token) {
+			config.headers["x-access-token"] = token;
+			config.headers["Content-Type"] = "multipart/form-data";
+			formData = new FormData();
+			formData.append("title", recipeData.title);
+			formData.append("description", recipeData.description);
+			formData.append("categoryId", recipeData.categoryId);
+			formData.append("image", recipeData.image);
+		}
+		axios
+			.put(`recipe/edit/${recipeId}`, formData, config)
+			.then(res => {
+				return dispatch({ type: types.EDIT_RECIPE_SUCCESS });
+			}).then(() => {
+				dispatch(editRecipeDone());
+			})
+			.catch(err => dispatch(errorOccured(err.response.data)));
+	};
+};
+
 export const deleteRecipeInit = () => {
 	return {
 		type: types.DELETE_RECIPE_INIT
 	};
 };
 
-// This is possible because of the redux-thunk middleware
 export const deleteRecipe = recipeId => {
 	return (dispatch, getState) => {
 		dispatch(loading());
 		const token = getState().auth.token;
 
-		// Headers
 		const config = {
 			headers: {}
 		};
 
-		// If token, add to headers
 		if (token) {
 			config.headers["x-access-token"] = token;
 		}

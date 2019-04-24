@@ -18,7 +18,7 @@ componentDidMount(){
 							<Spinner color="dark" />
 						</div>
 					) : (
-                        <RecipeCard  recipes={this.props.recipes} isAuth={this.props.isAuth}/>
+                        <RecipeCard  recipes={this.props.recipes} isAuth={this.props.isAuth} userId={this.props.userId}/>
                         )}
                 </Row>
             </Container>
@@ -29,7 +29,9 @@ componentDidMount(){
 const mapStateToProps = state => ({
 	recipes: state.recipe.recipes,
     isLoading: state.recipe.isLoading,
-    isAuth: state.auth.token !== null
+    isAuth: state.auth.token !== null,
+    userId:state.auth.userId
+
     
 });
 

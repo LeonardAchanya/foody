@@ -27,7 +27,7 @@ class UserRecipes extends Component {
                             <Spinner color="dark" />
                         </div>
                     ) : (
-                            <RecipeCard recipes={this.props.recipes} isAuth={this.props.isAuth} removeRecipe={this.removeRecipe} />
+                            <RecipeCard recipes={this.props.recipes} isAuth={this.props.isAuth} userId={this.props.userId} removeRecipe={this.removeRecipe} />
                         )}
                 </Row>
             </Container>
@@ -39,7 +39,9 @@ const mapStateToProps = state => ({
     recipes: state.recipe.recipes,
     isLoading: state.recipe.isLoading,
     recipeDeleted: state.recipe.recipeDeleted,
-    isAuth: state.auth.token !== null
+    isAuth: state.auth.token !== null,
+    userId:state.auth.userId
+
 
 });
 

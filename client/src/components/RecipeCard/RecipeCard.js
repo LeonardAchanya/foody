@@ -5,7 +5,7 @@ import striptags from 'striptags';
 
 import "./RecipeCard.css";
 
-const RecipeCard = ({ recipes, isAuth, removeRecipe }) => {
+const RecipeCard = ({ recipes, isAuth,userId, removeRecipe }) => {
     return (
         <>
             {recipes.map(recipe => (
@@ -25,8 +25,14 @@ const RecipeCard = ({ recipes, isAuth, removeRecipe }) => {
                                 <i className="fas fa-bookmark"></i>
                                 <i className="far fa-heart">12</i>
                                 <i className="far fa-comment-alt">123</i>
-                                <button onClick={() => removeRecipe(recipe.id)}><i class="far fa-trash-alt"></i></button>
-                                <NavLink to={`edit/` + recipe.id}><i class="far fa-edit"></i></NavLink>
+                                {
+                                    // eslint-disable-next-line
+                                    userId != recipe.user.id ? "":
+                                <>
+                                <button onClick={() => removeRecipe(recipe.id)}><i className="far fa-trash-alt">delete</i></button>
+                                <NavLink to={`edit-recipe/` + recipe.id}><i className="far fa-edit">edit</i></NavLink>
+                                </>
+                            }
                             </div>
 
                         </>

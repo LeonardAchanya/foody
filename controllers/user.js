@@ -37,17 +37,13 @@ exports.postAddUser = (req, res, next) => {
                             imageUrl
                         }).then((user) => {
                             jwt.sign(
-                                { id: user.id },
+                                { userId: user.id },
                                 process.env.AUTH_SECRET_KEY,
                                 { expiresIn: "1h" },
                                 (err, token) => {
                                     res.json({
                                         token,
-                                        user: {
-                                            id: user.id,
-                                            name: user.firstname + " " + user.lastname,
-                                            email: user.email
-                                        }
+                                        user
                                     })
                                 });
                         }).catch((err) => res.status(500).json({ msg: "error occured" }))
